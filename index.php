@@ -42,24 +42,16 @@ $students = "SELECT * FROM student_details" ;
 $std = $conn->query($students);
 
 while ($student = mysqli_fetch_array($std)) {
-    // echo '-------------'.$student['student_id'].'------------<br>';
-
     $answer = [];
     array_push($answer,strip_tags($student['student_id']));
     foreach($allQuestionIdDetails as $ques) {
         $ans = getQuestionForm($ques['id'], $student['student_id']);
-        // echo $ans .'<br><Br>';
         array_push($answer, substr($ans, 0, 2));
     }
-
-    // '<pre>'.print_r($answer).'</pre>';
-
-    // echo '-------------------------<br>';
     array_push($array,$answer);
 }
 
 
-// array_unshift($array, $allQuestion);
 
 array_to_csv_download($array,
     "numbers.csv"
